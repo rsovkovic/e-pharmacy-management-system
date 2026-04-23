@@ -1,5 +1,14 @@
 import { Schema, model, models } from 'mongoose';
 
+export interface IUser {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  phone: string;
+  token?: string;
+}
+
 const userSchema = new Schema(
   {
     name: { type: String, required: true },
@@ -11,6 +20,7 @@ const userSchema = new Schema(
       enum: ['admin', 'owner', 'user'],
       default: 'user',
     },
+    token: { type: String, default: '' },
   },
   { timestamps: true, versionKey: false },
 );

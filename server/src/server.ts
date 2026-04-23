@@ -2,7 +2,7 @@ import express from 'express';
 import type { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import productRouter from './routes/productsRoutes';
-import userRouter from './routes/userRoutes';
+import userRouter from './routes/authRoutes';
 import { connectMongoDB } from './db/connectMongoDB';
 import 'dotenv/config';
 import { logger } from './middleware/logger';

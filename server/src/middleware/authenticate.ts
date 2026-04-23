@@ -1,20 +1,36 @@
 import { Request, Response, NextFunction } from 'express';
-import { AnyObjectSchema, ValidationError } from 'yup';
+import jwt from 'jsonwebtoken';
+import { IUser, User } from '../models/users';
 
-export const validateBody = (schema: AnyObjectSchema) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      await schema.validate(req.body, { abortEarly: false });
-      next();
-    } catch (error: unknown) {
-      if (error instanceof ValidationError) {
-        return res.status(400).json({
-          message: 'Validation failed',
-          errors: error.errors,
-        });
-      }
+export interface AuthRequest extends Request {
+  user?: IUser;
+}
 
-      next(error);
+export const authenticate = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { authorization = '' } = req.headers;
+  const [bearer, token] = authorization.split(' ');
+
+  if (bearer !== 'Bearer' || !token) {
+    return res.status(401).json({ message: 'Not authorized' });
+  }
+
+  try {
+    const { id } = jwt.verify(token, process.env.JWT_SECRET as string) as {
+      id: string;
+    };
+    const user = await User.findById(id);
+
+    if (!user || user.token !== token) {
+      return res.status(401).json({ message: 'Not authorized' });
     }
-  };
+
+    req.user = user;
+    next();
+  } catch {
+    res.status(401).json({ message: 'Not authorized' });
+  }
 };
