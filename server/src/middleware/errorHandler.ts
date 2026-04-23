@@ -10,7 +10,6 @@ export const errorHandler = (
   res: Response,
   next: NextFunction,
 ) => {
-  // Використовуємо твій логер pino (якщо він доступний) або console
   console.error(`[ERROR] ${req.method} ${req.url}: ${err.message}`);
 
   const isProd = process.env.NODE_ENV === 'production';
