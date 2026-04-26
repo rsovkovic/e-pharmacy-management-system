@@ -1,8 +1,12 @@
 import express from 'express';
-import { productsController } from '../controllers/productsController';
+import { getAllProducts } from '../controllers/productsController';
+import { Wrapper } from '../utils/wrapper';
+import { authenticate } from '../middleware/authenticate';
 
 const router = express.Router();
 
-router.get('/', productsController.getAll);
+router.use(authenticate);
+
+router.get('/', Wrapper(getAllProducts));
 
 export default router;

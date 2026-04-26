@@ -39,3 +39,12 @@ export const shopSchema = Yup.object().shape({
     .max(5, 'Rating cannot be more than 5')
     .required('Rating is required'),
 });
+
+export const productSchema = Yup.object().shape({
+  name: Yup.string().required('Product name is required'),
+  category: Yup.string().required('Category is required'),
+  price: Yup.number().positive('Price must be positive').required(),
+  stock: Yup.number().integer().min(0).required(),
+  suppliers: Yup.string().required(),
+  photo: Yup.string().url('Must be a valid photo URL').nullable(),
+});
