@@ -66,3 +66,14 @@ export const logout = async (req: AuthRequest, res: Response) => {
 
   res.status(204).json();
 };
+
+export const getCurrentUser = async (req: AuthRequest, res: Response) => {
+  const { name, email, role, phone } = req.user!;
+
+  res.status(200).json({
+    name,
+    email,
+    role,
+    phone,
+  });
+};

@@ -24,3 +24,18 @@ export const loginSchema = Yup.object().shape({
     .min(7, 'Password must be at least 7 characters')
     .required('Password is required'),
 });
+
+export const shopSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(3, 'Shop name is too short')
+    .required('Shop name is required'),
+  address: Yup.string().required('Address is required'),
+  city: Yup.string().required('City is required'),
+  phone: Yup.string()
+    .matches(/^[0-9+]+$/, "Only numbers and '+'")
+    .required('Phone is required'),
+  rating: Yup.number()
+    .min(0)
+    .max(5, 'Rating cannot be more than 5')
+    .required('Rating is required'),
+});

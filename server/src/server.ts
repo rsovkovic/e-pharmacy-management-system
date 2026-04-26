@@ -1,8 +1,10 @@
 import express from 'express';
 import type { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import authRouter from './routes/authRoutes';
 import productRouter from './routes/productsRoutes';
 import userRouter from './routes/authRoutes';
+import shopRouter from './routes/shopRoutes';
 import { connectMongoDB } from './db/connectMongoDB';
 import 'dotenv/config';
 import { logger } from './middleware/logger';
@@ -20,8 +22,11 @@ app.use(logger);
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({ message: 'Pharmacy API is running...' });
 });
+
+app.use('/api/user', authRouter);
 app.use('/api/products', productRouter);
-app.use('/api/user', userRouter);
+// app.use('/api/user', userRouter);
+app.use('/api/shop', shopRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
