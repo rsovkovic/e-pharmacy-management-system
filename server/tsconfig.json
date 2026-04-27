@@ -85,7 +85,8 @@
     // "baseUrl": ".",
 
     // ОСЬ ЦЕЙ РЯДОК ВИПРАВИТЬ ПОМИЛКУ TS5011:
-    "rootDir": "..",
+    // "rootDir": "..",
+    "rootDir": "./src",
 
     "outDir": "./dist",
     // "paths": {
