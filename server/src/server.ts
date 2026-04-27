@@ -5,6 +5,7 @@ import authRouter from './routes/authRoutes';
 import productRouter from './routes/productsRoutes';
 import userRouter from './routes/authRoutes';
 import shopRouter from './routes/shopRoutes';
+import statisticsRouter from './routes/statisticsRoutes';
 import { connectMongoDB } from './db/connectMongoDB';
 import 'dotenv/config';
 import { logger } from './middleware/logger';
@@ -27,6 +28,7 @@ app.use('/api/user', authRouter);
 app.use('/api/products', productRouter);
 // app.use('/api/user', userRouter);
 app.use('/api/shop', shopRouter);
+app.use('/api/statistics', statisticsRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

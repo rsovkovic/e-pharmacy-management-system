@@ -1,6 +1,7 @@
 // ////////////////////////////////////////////////////////
 
 // @ts-nocheck
+//import 'dotenv/config';
 // import mongoose from 'mongoose';
 // import { Product } from '../src/models/product';
 // import { Shop } from '../src/models/shop';
