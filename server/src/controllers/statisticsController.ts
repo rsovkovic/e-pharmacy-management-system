@@ -5,6 +5,7 @@ import { Product } from '../models/product';
 import { Supplier } from '../models/supplier';
 import { Order } from '../models/order';
 import { IncomeExpense } from '../models/incomeExpense';
+import { Review } from '../models/reviews';
 
 // export const getStatistics = async (req: AuthRequest, res: Response) => {
 //   const [productsCount, customersCount, suppliersCount] = await Promise.all([
@@ -26,12 +27,13 @@ import { IncomeExpense } from '../models/incomeExpense';
 // };
 
 export const getStatistics = async (req: AuthRequest, res: Response) => {
-  const [productsCount, customersCount, suppliersCount, transactions] =
+  const [productsCount, customersCount, suppliersCount, transactions, reviews] =
     await Promise.all([
       Product.countDocuments(),
       Customer.countDocuments(),
       Supplier.countDocuments(),
       IncomeExpense.find().sort({ _id: -1 }).limit(6),
+      Review.find().limit(3),
     ]);
 
   const recentCustomers = await Customer.find().sort({ _id: -1 }).limit(5);
@@ -44,6 +46,7 @@ export const getStatistics = async (req: AuthRequest, res: Response) => {
     },
     recentCustomers,
     incomeExpenses: transactions,
+    reviews,
   });
 };
 

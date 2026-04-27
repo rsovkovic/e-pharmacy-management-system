@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   createShop,
+  deleteShop,
   getShopById,
   getShops,
   updateShop,
@@ -8,7 +9,11 @@ import {
 import { authenticate } from '../middleware/authenticate';
 import { Wrapper } from '../utils/wrapper';
 import { validateBody } from '../utils/validateBody';
-import { productSchema, shopSchema } from '../validations/validationSchemas';
+import {
+  productSchema,
+  shopSchema,
+  updateShopSchema,
+} from '../validations/validationSchemas';
 import {
   addProduct,
   deleteProduct,
@@ -24,7 +29,12 @@ router.use(authenticate);
 router.get('/', Wrapper(getShops));
 router.post('/create', validateBody(shopSchema), Wrapper(createShop));
 router.get('/:shopId', Wrapper(getShopById));
-router.put('/:shopId/update', validateBody(shopSchema), Wrapper(updateShop));
+router.put(
+  '/:shopId/update',
+  validateBody(updateShopSchema),
+  Wrapper(updateShop),
+);
+router.delete('/:shopId/delete', authenticate, Wrapper(deleteShop));
 router.get('/:shopId/product', authenticate, Wrapper(getProductsByShop));
 router.get(
   '/:shopId/product/:productId',
