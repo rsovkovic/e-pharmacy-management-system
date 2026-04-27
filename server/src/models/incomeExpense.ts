@@ -1,10 +1,5 @@
+import { IncomeExpenseType } from '../types/types';
 import { Schema, model, models } from 'mongoose';
-
-export interface IncomeExpenseType {
-  amount: string;
-  name: string;
-  type: string;
-}
 
 const incomeExpenseSchema = new Schema<IncomeExpenseType>(
   {

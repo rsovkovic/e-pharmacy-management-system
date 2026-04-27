@@ -59,18 +59,42 @@
 //   "include": ["src/**/*"]
 // }
 
+// {
+//   "compilerOptions": {
+//     "target": "ES2020",
+//     "module": "NodeNext",
+//     "moduleResolution": "NodeNext",
+//     // "outDir": "dist",
+//     // "rootDir": "src",
+//     "rootDirs": ["src", "../shared"],
+//     "strict": true,
+//     "esModuleInterop": true,
+//     "skipLibCheck": true,
+//     "paths": {
+//       "@shared/*": ["../shared/*"]
+//     }
+//   },
+//   "include": ["src", "../shared"]
+// }
+
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ESNext",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "outDir": "dist",
-    "rootDir": "src",
-    "strict": true,
+    // "baseUrl": ".",
+
+    // ОСЬ ЦЕЙ РЯДОК ВИПРАВИТЬ ПОМИЛКУ TS5011:
+    "rootDir": "..",
+
+    "outDir": "./dist",
+    // "paths": {
+    //   "@shared/*": ["../shared/*"]
+    // },
     "esModuleInterop": true,
     "skipLibCheck": true
   },
-  "include": ["src"]
+  "include": ["src/**/*"]
 }
 
 // {

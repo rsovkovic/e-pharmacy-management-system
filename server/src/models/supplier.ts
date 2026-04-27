@@ -1,13 +1,5 @@
+import { SupplierType } from '../types/types';
 import { Schema, model, models } from 'mongoose';
-
-export interface SupplierType {
-  name: string;
-  address: string;
-  supplier: string;
-  date: string;
-  amount: string;
-  status: string;
-}
 
 const supplierSchema = new Schema<SupplierType>(
   {

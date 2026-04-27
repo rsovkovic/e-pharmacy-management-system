@@ -1,14 +1,5 @@
+import { OrderType } from '../types/types';
 import { Schema, model, models } from 'mongoose';
-
-export interface OrderType {
-  photo: string;
-  name: string;
-  address: string;
-  products: string;
-  price: string;
-  status: string;
-  order_date: string;
-}
 
 const orderSchema = new Schema<OrderType>(
   {

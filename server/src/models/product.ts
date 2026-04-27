@@ -1,15 +1,5 @@
+import { ProductType } from '../types/types';
 import { Schema, model, models } from 'mongoose';
-
-export interface ProductType {
-  id: string;
-  photo: string;
-  name: string;
-  suppliers: string;
-  stock: number;
-  price: number;
-  category: string;
-  shopId: Schema.Types.ObjectId;
-}
 
 const ProductSchema = new Schema<ProductType>(
   {

@@ -3,7 +3,6 @@ import { AuthRequest } from '../middleware/authenticate';
 import { Customer } from '../models/customer';
 import { Product } from '../models/product';
 import { Supplier } from '../models/supplier';
-import { Order } from '../models/order';
 import { IncomeExpense } from '../models/incomeExpense';
 import { Review } from '../models/reviews';
 

@@ -30,23 +30,8 @@
 
 // export const Shop = models.Shop || model<ShopType>('Shop', shopSchema);
 
+import { ShopType } from '../types/types';
 import { Schema, model, models } from 'mongoose';
-
-export interface ShopType {
-  shopName: string;
-  ownerName: string;
-  email: string;
-  street: string;
-  zip: string;
-  name?: string;
-  address?: string;
-  city: string;
-  phone: string;
-  rating: number;
-  hasDelivery: boolean;
-  logoUrl?: string;
-  owner: Schema.Types.ObjectId;
-}
 
 const shopSchema = new Schema<ShopType>(
   {
