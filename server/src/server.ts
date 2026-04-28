@@ -29,6 +29,9 @@ app.use(logger);
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({ message: 'Pharmacy API is running...' });
 });
+app.get('/api/test-connection', (req: Request, res: Response) => {
+  res.json({ message: "Бекенд на зв'язку! CORS не заважає." });
+});
 
 app.use('/api/user', authRouter);
 app.use('/api/products', productRouter);

@@ -27,6 +27,9 @@ const router = express.Router();
 router.use(authenticate);
 
 router.get('/', Wrapper(getShops));
+// router.get('/test-connection', (req, res) => {
+//   res.json({ message: "Бекенд на зв'язку!", timestamp: new Date() });
+// });
 router.post('/create', validateBody(shopSchema), Wrapper(createShop));
 router.get('/:shopId', Wrapper(getShopById));
 router.put(
