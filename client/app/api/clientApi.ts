@@ -21,7 +21,7 @@ export const login = async (userData: LoginRequest) => {
 };
 
 export const logout = async (): Promise<void> => {
-  await api.post('/users/signout');
+  await api.post('/user/logout');
 };
 
 // export const register = async (

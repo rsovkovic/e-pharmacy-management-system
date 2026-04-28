@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 
 
 export interface CustomerType {
@@ -104,3 +105,5 @@ export interface RegisterResponse {
     role: string;
   };
 }
+
+export type ApiError = AxiosError<{ error: string }>;
