@@ -24,7 +24,7 @@ import {
 
 const router = express.Router();
 
-router.use(authenticate);
+// router.use(authenticate);
 
 router.get('/', Wrapper(getShops));
 router.post('/create', validateBody(shopSchema), Wrapper(createShop));
