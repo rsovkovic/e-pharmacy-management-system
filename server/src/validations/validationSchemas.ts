@@ -11,7 +11,7 @@ export const registerSchema = Yup.object().shape({
     .min(7, 'Password must be at least 7 characters')
     .required('Password is required'),
   phone: Yup.string()
-    .matches(/^[0-9+]+$/, "Only numbers and '+'")
+    .matches(/^[0-9+\s()/-]+$/, "Only numbers and '+'")
     // .min(10, 'Too short number')
     .required('Phone is required'),
 });
