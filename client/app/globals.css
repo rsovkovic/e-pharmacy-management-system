@@ -1,8 +1,12 @@
-@import "tailwindcss";
+/* @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F7F8FA;
+  --color-green: #59B17A;
+  --green-hover: bg-green-400/10;
+  --color-green-input: #3F945F;
+  --text-primary: #1D1E21;
+  --text-secondary: #93939A;
 }
 
 @theme inline {
@@ -12,15 +16,73 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+} */
+
+
+@import "tailwindcss";
+
+/* Оголошуємо варіант dark для Tailwind */
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* BRAND */
+  --color-primary: #59B17A;
+  --color-primary-hover: #4a9665;
+  --color-primary-light: color-mix(in srgb, var(--color-primary) 10%, transparent);
+
+  /* BASE */
+  --color-background: #F7F8FA;
+  --color-foreground: #1D1E21;
+  --color-muted: #93939A;
+
+  /* UI */
+  --color-surface: #ffffff;
+  --color-border: #E1E1E1;
+
+  /* RADIUS */
+  --radius-xl: 30px;
+  --radius-full: 9999px;
 }
+
+ /* ТЕМНА ТЕМА: автоматичне перевизначення */
+    .dark {
+    --color-background: #0D1E21; /* Найтемніший з макету */
+    --color-foreground: #F7F8FA; /* Світлий текст */
+    --color-primary: #69c18a;
+    --color-surface: #1D1E21;    /* Темна картка */
+    --color-border: #2D2E32;     /* Темніший бордер */
+    --color-muted: #71717A;
+  }
+
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui;
+  }
+}
+
+@layer utilities {
+  /* .input-primary {
+    @apply border-border focus:ring-2 focus:ring-primary/20 outline-none;
+  } */
+
+.input-primary {
+    @apply w-full bg-transparent border border-border px-4 py-3 rounded-full 
+           focus:border-primary focus:ring-4 focus:ring-primary/10 
+           outline-none transition-all duration-200 placeholder:text-muted;
+  }
+
+  .border-soft {
+    @apply border-foreground/10;
+  }
+
+}
+
+
+/* git commit -m "feat: implement reusable Input component with full autocomplete support" */

@@ -4,12 +4,13 @@
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useState } from 'react';
-import { Formik, Form, ErrorMessage, FormikHelpers, Field } from 'formik';
+import { Formik, Form, FormikHelpers, Field } from 'formik';
 import toast from 'react-hot-toast';
 import { login } from '@/app/api/clientApi';
 import { LoginRequest } from '@/types/types';
 import { loginSchema } from '@/validations/validationSchemas';
 import axios from 'axios';
+import { Input } from '@/Ui/Input';
 
 const initialFormValues: LoginRequest = {
   email: '',
@@ -62,9 +63,9 @@ export const LoginForm = () => {
                 name="email"
                 type="email"
                 placeholder="Email address"
-                className="bg-[#0f0f0f] border border-gray-800 p-3 rounded-lg text-white outline-none focus:border-green-500 transition-all placeholder:text-gray-600"
+                autoComplete="email"
+                component={Input}
               />
-              <ErrorMessage name="email" component="span" className="text-xs text-red-500 ml-1" />
             </div>
 
             {/* Password - ЗАМІСТЬ Phone */}
@@ -73,17 +74,17 @@ export const LoginForm = () => {
                 name="password"
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Password"
-                className="bg-[#0f0f0f] border border-gray-800 p-3 rounded-lg text-white outline-none focus:border-green-500 transition-all placeholder:text-gray-600"
+                autoComplete="current-password"
+               component={Input}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3.5 text-gray-500 hover:text-gray-300"
+                className="absolute right-3 top-3.5 text-muted hover:text-gray-300"
               >
                 {/* Можна додати іконку ока тут */}
                 {showPassword ? 'Hide' : 'Show'}
               </button>
-              <ErrorMessage name="password" component="span" className="text-xs text-red-500 ml-1" />
             </div>
           </div>
 
@@ -96,7 +97,7 @@ export const LoginForm = () => {
             </button>
             <Link
               href="/register"
-              className="text-sm text-gray-400 underline hover:text-white transition-colors"
+              className="text-sm text-muted underline hover:text-gray-300 transition-colors"
             >
               Don’t have an account?
             </Link>

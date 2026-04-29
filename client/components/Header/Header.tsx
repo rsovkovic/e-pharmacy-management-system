@@ -61,7 +61,7 @@ export default function Header() {
               type="submit"
             //   variant="outline"
               onClick={handleLogout}
-              className="hidden px-5 md:block py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-medium transition-all"
+              className="hidden px-5 md:block py-3 text-[#3F945F] outline-1 bg-background hover:bg-green-700 hover:text-white rounded-full font-medium transition-all"
             >
               Log out
             </button>
