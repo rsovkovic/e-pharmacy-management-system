@@ -4,13 +4,14 @@
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useState } from 'react';
-import { Formik, Form, FormikHelpers, Field } from 'formik';
+import { Formik, Form,  FormikHelpers, Field } from 'formik';
 import toast from 'react-hot-toast';
 import { login } from '@/app/api/clientApi';
 import { LoginRequest } from '@/types/types';
 import { loginSchema } from '@/validations/validationSchemas';
 import axios from 'axios';
 import { Input } from '@/Ui/Input';
+import { Button } from '@/Ui/Button';
 
 const initialFormValues: LoginRequest = {
   email: '',
@@ -37,11 +38,9 @@ export const LoginForm = () => {
     } catch (err) {
 
     if (axios.isAxiosError<{ error: string }>(err)) {
-   
-    const msg = err.response?.data?.error || err.message || 'Login failed';
-    toast.error(msg);
+    const ErrorMessage = err.response?.data?.error || err.message || 'Login failed';
+    toast.error(ErrorMessage);
   }else {
-    // Це на випадок звичайної помилки в коді (наприклад, помилка в пропсах)
     toast.error('An unexpected error occurred');
     console.error(err);
   }
@@ -55,10 +54,10 @@ export const LoginForm = () => {
         validationSchema={loginSchema}
         onSubmit={handleSubmit}
       >
+         {({ isSubmitting }) => (
         <Form>
           <div className="flex flex-col gap-3">
             {/* Email */}
-            <div className="flex flex-col gap-1">
               <Field
                 name="email"
                 type="email"
@@ -66,35 +65,30 @@ export const LoginForm = () => {
                 autoComplete="email"
                 component={Input}
               />
-            </div>
-
             {/* Password - ЗАМІСТЬ Phone */}
-            <div className="flex flex-col gap-1 relative">
+           
               <Field
                 name="password"
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Password"
                 autoComplete="current-password"
                component={Input}
-              />
+              >
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3.5 text-muted hover:text-gray-300"
+                className="text-xs  text-muted hover:text-gray-300  transition-colors font-normal"
               >
                 {/* Можна додати іконку ока тут */}
                 {showPassword ? 'Hide' : 'Show'}
               </button>
-            </div>
+           </Field>
           </div>
 
           <div className="mt-6 flex items-center gap-5">
-            <button
-              type="submit"
-              className="px-10 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-medium transition-all active:scale-95 shadow-lg shadow-green-900/20"
-            >
+            <Button type="submit" isLoading={isSubmitting}>
               Log in
-            </button>
+           </Button>
             <Link
               href="/register"
               className="text-sm text-muted underline hover:text-gray-300 transition-colors"
@@ -102,7 +96,8 @@ export const LoginForm = () => {
               Don’t have an account?
             </Link>
           </div>
-        </Form>
+          </Form>
+            )}
       </Formik>
     </div>
   );

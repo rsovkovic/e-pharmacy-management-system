@@ -150,6 +150,7 @@ import { RegisterRequest } from '@/types/types';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { Input } from '@/Ui/Input';
+import { Button } from '@/Ui/Button';
 
  const initialFormValues: RegisterRequest = {
    name: '',
@@ -181,8 +182,8 @@ export const RegisterForm = () => {
     } catch (err) {
 
     if (axios.isAxiosError<{ error: string }>(err)) {
-      const msg = err.response?.data?.error || 'Registration failed';
-      toast.error(msg);
+      const ErrorMessage  = err.response?.data?.error || 'Registration failed';
+      toast.error(ErrorMessage );
     } else {
       // На випадок помилок не пов'язаних з мережею
       toast.error('An unexpected error occurred');
@@ -199,21 +200,17 @@ export const RegisterForm = () => {
         validationSchema={registerSchema}
         onSubmit={handleSubmit}
       >
+        {({ isSubmitting }) => (
           <Form className="flex flex-col gap-5">
             <div className="flex flex-col gap-3">
-              
               {/* Name */}
-              <div className="flex flex-col gap-1">
                 <Field
                   name="name"
                   placeholder="User Name"
                   autoComplete="name"
                   component={Input}
                 />
-              </div>
-
               {/* Email */}
-              <div className="flex flex-col gap-1">
                 <Field
                   name="email"
                   type="email"
@@ -221,44 +218,34 @@ export const RegisterForm = () => {
                   autoComplete="email"
                   component={Input}
                 />
-              </div>
-
               {/* Password */}
-              <div className="relative flex flex-col gap-1">
                 <Field
                   name="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Password"
                   autoComplete="new-password"
                   component={Input}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-3 text-muted hover:text-gray-300"
                 >
+                   <button
+                    type="button"
+                     onClick={() => setShowPassword(!showPassword)}
+                    className="text-xs  text-muted hover:text-gray-300  transition-colors font-normal"
+                    >
                   {showPassword ? 'Hide' : 'Show'}
-                </button>
-              </div>
-
+                   </button>
+              </Field>
               {/* Phone */}
-              <div className="flex flex-col gap-1">
                 <Field
                   name="phone"
                   placeholder="Phone number"
                   autoComplete="tel"
                   component={Input}
                 />
-              </div>
             </div>
-
             <div className="mt-4 flex items-center gap-5">
-              <button 
-                type="submit" 
-                className="px-10 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-medium transition-all"
-              >
-                Registration
-              </button>
+            <Button type="submit" isLoading={isSubmitting}>
+             Registration
+             </Button>
               <Link
                 href="/login"
                 className="text-sm text-muted underline hover:text-gray-300 transition-colors"
@@ -267,6 +254,7 @@ export const RegisterForm = () => {
               </Link>
             </div>
           </Form>
+          )}
       </Formik>
     </div>
   );

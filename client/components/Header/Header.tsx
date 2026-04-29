@@ -9,35 +9,61 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { AxiosError } from 'axios';
+import { Button } from '@/Ui/Button';
 // import { Button } from '../Ui/Button';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 //   const { setLogout, isLoggedIn } = useAuthStore();
   const router = useRouter();
-//   if (!isLoggedIn) return null;
+  //   if (!isLoggedIn) return null;
+  
+const [isLoggingOut, setIsLoggingOut] = useState(false); // Додай цей стан
 
-  const handleLogout = async () => {
-    const toastId = toast.loading('Logging out...');
+const handleLogout = async () => {
+  const toastId = toast.loading('Logging out...');
+  setIsLoggingOut(true); // Вмикаємо лоадер на кнопці
 
-    try {
-      await logoutApi();
+  try {
+    await logoutApi();
+    toast.success('Successfully logged out!', { id: toastId });
+  } catch (error) {
+    const err = error as AxiosError<{ message?: string }>;
+    const errorMessage = err.response?.data?.message || 'Server error during logout';
+    toast.error(errorMessage, { id: toastId });
+  } finally {
+    setIsLoggingOut(false); // Вимикаємо лоадер на кнопці
+    
+    // Твоя логіка завершення
+    // setLogout(); 
+    if (isMenuOpen) setIsMenuOpen(false);
+    router.push('/login');
+  }
+};
 
-      toast.success('Successfully logged out!', { id: toastId });
-    } catch (error) {
-      const err = error as AxiosError<{ message?: string }>;
 
-      const msg =
-        err.response?.data?.message || 'Server error during logout';
-      toast.error(msg, { id: toastId });
-    } finally {
-    //   setLogout();
 
-      if (isMenuOpen) setIsMenuOpen(false);
+  // const handleLogout = async () => {
+  //   const toastId = toast.loading('Logging out...');
 
-      router.push('/register');
-    }
-  };
+  //   try {
+  //     await logoutApi();
+
+  //     toast.success('Successfully logged out!', { id: toastId });
+  //   } catch (error) {
+  //     const err = error as AxiosError<{ message?: string }>;
+
+  //     const ErrorMessage =
+  //       err.response?.data?.message || 'Server error during logout';
+  //     toast.error(ErrorMessage, { id: toastId });
+  //   } finally {
+  //   //   setLogout();
+
+  //     if (isMenuOpen) setIsMenuOpen(false);
+
+  //     router.push('/login');
+  //   }
+  // };
 
   return (
     <header className="w-full">
@@ -57,14 +83,24 @@ export default function Header() {
           </nav>
           <div className="flex items-center gap-4">
             {/* <UserBar /> */}
-            <button
+            {/* <button
               type="submit"
             //   variant="outline"
               onClick={handleLogout}
-              className="hidden px-5 md:block py-3 text-[#3F945F] outline-1 bg-background hover:bg-green-700 hover:text-white rounded-full font-medium transition-all"
+              className="hidden px-5 md:block py-3 text-primary border border-primary bg-background hover:bg-primary-hover hover:text-white rounded-full font-medium transition-all"
             >
               Log out
-            </button>
+            </button> */}
+
+            <Button
+              type="button"
+              variant="secondary"
+              isLoading={isLoggingOut}
+              onClick={handleLogout}
+              className="hidden md:block"
+            >
+              Log out
+            </Button>
             {/* <button className="md:hidden" onClick={() => setIsMenuOpen(true)}>
               <svg className="h-7 w-7 stroke-white">
                 <use href="/sprite.svg#icon-burger-menu" />
